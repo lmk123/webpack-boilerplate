@@ -91,6 +91,6 @@ function uglify (files, options) {
  */
 function combine (files) {
   return files.reduce(function (prevVal, path) {
-    return prevVal + nativeFS.readFileSync(path, 'utf8')
+    return prevVal + ';' + nativeFS.readFileSync(path, 'utf8')
   }, '')
 }
