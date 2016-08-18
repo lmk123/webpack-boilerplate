@@ -1,8 +1,6 @@
-const webpack = require( 'webpack' ),
-  HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
-  ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
-
-require( 'fs-extra' ).removeSync('./dist');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   entry: './src/index',
@@ -14,15 +12,13 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: [ 'es2015', 'stage-3' ],
-          plugins: [ 'transform-runtime' ]
-        }
+        include: [
+          path.resolve(__dirname, '../src')
+        ],
+        loader: 'babel-loader'
       },
       {
-        test: /\.(woff2?|ttf|png|svg)$/,
+        test: /\.(woff2?|ttf|png|svg|eot)$/,
         loader: 'file-loader',
         query: {
           name: '[name].[ext]'
@@ -38,25 +34,30 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract( 'style-loader', 'css-loader?sourceMap' )
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!postcss-loader')
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract( 'style-loader', 'css-loader?sourceMap!sass-loader?sourceMap' )
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!postcss-loader!sass-loader?sourceMap')
       }
     ]
   },
+  postcss: function () {
+    return [require('autoprefixer')]
+  },
   vue: {
     loaders: {
-      css: ExtractTextPlugin.extract( 'css-loader?sourceMap' ),
-      sass: ExtractTextPlugin.extract( 'css-loader?sourceMap!sass-loader?sourceMap' )
+      css: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader'),
+      scss: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader!sass-loader?sourceMap')
     }
   },
   plugins: [
-    new HtmlWebpackPlugin( {
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
       template: './src/index.html'
-    } ),
-    new ExtractTextPlugin( '[name].css' )
-  ]
-};
+    }),
+    new ExtractTextPlugin('[name].css')
+  ],
+  devtool: '#source-map'
+}
 
