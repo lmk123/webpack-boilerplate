@@ -1,7 +1,7 @@
 const webpack = require('webpack')
+const WebpackMd5Hash = require('webpack-md5-hash')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const Combine = require('./Combine')
 const config = require('./webpack.base.config')
 
 // https://github.com/kangax/html-minifier#options-quick-reference
@@ -27,22 +27,17 @@ config.module.loaders[1].query.name = '[name].[hash:7].[ext]'
 config.vue.html = htmlMinifierOptions
 
 config.plugins = [
-  new Combine({
-    js: [
-      './node_modules/fastclick/lib/fastclick.js',
-      './node_modules/lodash/lodash.min.js',
-      './node_modules/vue/dist/vue.min.js',
-      './node_modules/vue-router/dist/vue-router.min.js',
-      './node_modules/vuex/dist/vuex.min.js'
-    ],
-    hash: 7
+  new WebpackMd5Hash(),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: Infinity
   }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
     template: './src/index.html',
     minify: htmlMinifierOptions
   }),
-  new ExtractTextPlugin('[name].[chunkhash:7].css'),
+  new ExtractTextPlugin('[name].[contenthash:7].css'),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: '"production"'

@@ -18,6 +18,7 @@
     "lodash": "4.15.0"
   },
   "devDependencies": {
+    "webpack-md5-hash": "0.0.5",
     "uglify-js": "2.7.3",
     "fs-extra": "0.30.0",
     "openpack": "1.0.0",

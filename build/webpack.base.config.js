@@ -1,9 +1,13 @@
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const path = require('path')
 
 module.exports = {
-  entry: './src/index',
+  entry: {
+    vendor: ['vue', 'vue-router', 'vuex', 'fastclick', 'lodash'],
+    main: './src/index'
+  },
   output: {
     path: './dist',
     filename: '[name].js'
@@ -56,7 +60,11 @@ module.exports = {
       filename: 'index.html',
       template: './src/index.html'
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity
+    })
   ],
   devtool: '#source-map'
 }

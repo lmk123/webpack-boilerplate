@@ -1,6 +1,7 @@
 const { body } = document
 
 // 消除移动端 300ms 的点击延迟
+import FastClick from 'fastclick'
 FastClick.attach(body)
 
 // 启动 web app
