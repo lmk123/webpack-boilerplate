@@ -75,7 +75,7 @@ const config = {
   plugins: [
     new webpack.DllReferencePlugin({
       context: '.',
-      manifest: require('../vendor-manifest.json'),
+      manifest: require('../vendor-manifest.json')
     }),
     new AddVendorToPlugin(require('../vendor-manifest.json').filename),
     new CopyWebpackPlugin([{ from: 'static' }]),
@@ -89,7 +89,7 @@ const config = {
       'process.env': {
         NODE_ENV: IS_PRODUCTION ? '"production"' : '"development"'
       }
-    }),
+    })
   ],
   devtool: '#source-map'
 }
@@ -108,5 +108,3 @@ if (IS_PRODUCTION) {
 }
 
 module.exports = config
-
-

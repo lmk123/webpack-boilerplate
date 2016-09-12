@@ -1,6 +1,5 @@
 const IS_PRODUCTION = !!process.env.PRODUCTION
 
-const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -12,12 +11,12 @@ const config = {
   output: {
     path: './dist',
     filename: IS_PRODUCTION ? '[name].[chunkhash:7].js' : '[name].js',
-    library: 'vendor_lib',
+    library: 'vendor_lib'
   },
   plugins: [
     new webpack.DllPlugin({
       name: 'vendor_lib',
-      path: './vendor-manifest.json',
+      path: './vendor-manifest.json'
     }),
     new webpack.DefinePlugin({
       'process.env': {

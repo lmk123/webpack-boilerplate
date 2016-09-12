@@ -4,6 +4,9 @@ const fs = require('fs')
 const path = require('path')
 
 webpack(config, function (err, stats) {
+  if (err) {
+    throw err
+  }
   const vendorName = stats.toJson({
     assetsByChunkName: true
   }).assetsByChunkName.vendor
@@ -12,4 +15,3 @@ webpack(config, function (err, stats) {
   manifestJson.filename = vendorName
   fs.writeFileSync(path.resolve(__dirname, '../vendor-manifest.json'), JSON.stringify(manifestJson))
 })
-
