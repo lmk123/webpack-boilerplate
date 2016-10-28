@@ -14,7 +14,8 @@ AddVendorToApp.prototype.apply = function (compiler) {
   // 如果有用到 html-webpack-plugin 则将文件加入到 assets 里面去
   compiler.plugin('compilation', function (compilation) {
     compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
-      htmlPluginData.assets.js.unshift(vendorName)
+      const assets = htmlPluginData.assets
+      assets.js.unshift(assets.publicPath + vendorName)
       callback(null, htmlPluginData)
     })
   })
