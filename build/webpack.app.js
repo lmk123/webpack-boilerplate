@@ -39,7 +39,7 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.(woff2?|ttf|png|svg|eot)$/,
+        test: /\.(woff2?|ttf|png|svg|eot)(\?\S*)?$/,
         loader: 'file-loader',
         query: {
           name: IS_PRODUCTION ? '[name].[hash:7].[ext]' : '[name].[ext]'
