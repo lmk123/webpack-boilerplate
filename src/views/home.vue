@@ -1,15 +1,13 @@
 <template>
-  hello {{helloValue}}.
+  <div>
+    hello {{getHello}}
+  </div>
 </template>
 
 <script>
-  import { helloValue } from '../vuex/getters'
+  import { mapGetters } from 'vuex'
   export default {
-    vuex: {
-      getters: {
-        helloValue
-      }
-    }
+    computed: mapGetters(['getHello'])
   }
 </script>
 

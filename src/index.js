@@ -5,7 +5,9 @@ import FastClick from 'fastclick'
 FastClick.attach(body)
 
 // 启动 web app
-import router from './views/router'
+import Vue from 'vue'
+import Root from './root.vue'
+
 const div = document.createElement('div')
 body.appendChild(div)
-router.start(require('./views/_root.vue'), div)
+new Vue(Root).$mount(div)
