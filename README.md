@@ -15,6 +15,8 @@
 
 详细情况可自行查看 `build` 目录下的 webpack 配置。
 
+如果你勤快的话，记得运行 `npm un gh-pages` 并删掉 package.json 里的 `scripts.deploy` 命令，这条命令是我发布 demo 站点用的。
+
 ## 分离 vendor 与 app
 
 将需要打包至 vendor 里的模块列在 [build/webpack.vendor.js](/build/webpack.vendor.js#L10) 的 `entry` 配置里即可，支持分离 vendor 内的 css 文件。
