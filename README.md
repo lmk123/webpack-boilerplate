@@ -15,7 +15,7 @@
 
 详细情况可自行查看 `build` 目录下的 webpack 配置。
 
-如果你勤快的话，记得运行 `npm un gh-pages` 并删掉 package.json 里的 `scripts.deploy` 命令，这条命令是我发布 demo 站点用的。
+如果你勤快的话，记得运行 `npm un gh-pages -D` 并删掉 package.json 里的 `scripts.deploy` 命令，这条命令是我发布 demo 站点用的。
 
 ## 分离 vendor 与 app
 
