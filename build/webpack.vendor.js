@@ -36,7 +36,8 @@ const config = {
       root: path.resolve(__dirname, '../')
     }),
     new ExtractTextPlugin(IS_PRODUCTION ? '[name].[contenthash:7].css' : '[name].css')
-  ]
+  ],
+  devtool: '#source-map'
 }
 
 if (IS_PRODUCTION) {
