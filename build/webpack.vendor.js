@@ -19,7 +19,7 @@ const config = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap')
-      },
+      }
     ]
   },
   plugins: [
@@ -35,7 +35,7 @@ const config = {
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname, '../')
     }),
-    new ExtractTextPlugin(IS_PRODUCTION ? '[name].[contenthash:7].css' : '[name].css'),
+    new ExtractTextPlugin(IS_PRODUCTION ? '[name].[contenthash:7].css' : '[name].css')
   ]
 }
 

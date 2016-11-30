@@ -7,11 +7,13 @@ webpack(config, function (err, stats) {
   if (err) {
     throw err
   }
-  const vendorName = stats.toJson({
+
+  // 记录 vendor 里打包出来的文件，AddVendorToApp 插件会用到
+  const filesName = stats.toJson({
     assetsByChunkName: true
   }).assetsByChunkName.vendor
 
   const manifestJson = require('../vendor-manifest.json')
-  manifestJson.filename = vendorName
+  manifestJson.filesName = filesName
   fs.writeFileSync(path.resolve(__dirname, '../vendor-manifest.json'), JSON.stringify(manifestJson))
 })

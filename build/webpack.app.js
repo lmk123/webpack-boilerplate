@@ -77,7 +77,7 @@ const config = {
       context: '.',
       manifest: require('../vendor-manifest.json')
     }),
-    new AddVendorToPlugin(require('../vendor-manifest.json').filename),
+    new AddVendorToPlugin(require('../vendor-manifest.json').filesName),
     new CopyWebpackPlugin([{ from: 'static' }]),
     new HtmlWebpackPlugin({
       filename: 'index.html',

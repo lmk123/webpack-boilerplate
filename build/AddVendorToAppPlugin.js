@@ -1,16 +1,19 @@
+/**
+ * 这个插件的作用是将 webpack.vendor 里打包出来的文件加入到 webpack.app 的打包过程中
+ */
+
 const path = require('path')
 const fs = require('fs')
 
 module.exports = AddVendorToApp
 
-function AddVendorToApp (vendorName) {
-  this.vendorName = vendorName
+function AddVendorToApp (filesName) {
+  this.filesName = filesName
 }
 
 AddVendorToApp.prototype.apply = function (compiler) {
-  const vendorName = this.vendorName
-
-  const vendorFilesContent = vendorName.map(function (filename) {
+  const filesName = this.filesName
+  const filesContent = filesName.map(function (filename) {
     return fs.readFileSync(path.resolve(__dirname, '../dist', filename), 'utf8')
   })
 
@@ -18,8 +21,8 @@ AddVendorToApp.prototype.apply = function (compiler) {
   compiler.plugin('compilation', function (compilation) {
     compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
       const assets = htmlPluginData.assets
-      vendorName.forEach(function (filename) {
-        var type = fileType(filename)
+      filesName.forEach(function (filename) {
+        var type = getFileType(filename)
         if (!type) return
         assets[type].unshift(assets.publicPath + filename)
       })
@@ -27,14 +30,17 @@ AddVendorToApp.prototype.apply = function (compiler) {
     })
   })
 
+  // 将 vendor 里打包出来的文件 emit 到 app 的打包过程里，
+  // 这样使用 webpack-dev-server 的时候它会自动将这些文件写入 memoryFileSystem 中
   compiler.plugin('emit', function (compilation, next) {
-    vendorName.forEach(function (filename, i) {
+    filesName.forEach(function (filename, i) {
+      const content = filesContent[i]
       compilation.assets[filename] = {
         source: function () {
-          return vendorFilesContent[i]
+          return content
         },
         size: function () {
-          return vendorFilesContent[i].length
+          return content.length
         }
       }
     })
@@ -43,7 +49,12 @@ AddVendorToApp.prototype.apply = function (compiler) {
   })
 }
 
-function fileType (filename) {
+/**
+ * 根据文件名的后缀判断文件类型
+ * @param {String} filename
+ * @return {String|null}
+ */
+function getFileType (filename) {
   if (filename.endsWith('.css')) {
     return 'css'
   }
