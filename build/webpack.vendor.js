@@ -19,6 +19,14 @@ const config = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap')
+      },
+      // 处理 css 里可能引用的文件
+      {
+        test: /\.(woff2?|ttf|svg|eot|png|jpg|jepg|gif|bmp)(\?\S*)?$/,
+        loader: 'file-loader',
+        query: {
+          name: IS_PRODUCTION ? '[name].[hash:7].[ext]' : '[name].[ext]'
+        }
       }
     ]
   },

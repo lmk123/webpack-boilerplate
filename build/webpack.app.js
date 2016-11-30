@@ -39,7 +39,7 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.(woff2?|ttf|png|svg|eot)(\?\S*)?$/,
+        test: /\.(woff2?|ttf|svg|eot|png|jpg|jepg|gif|bmp)(\?\S*)?$/,
         loader: 'file-loader',
         query: {
           name: IS_PRODUCTION ? '[name].[hash:7].[ext]' : '[name].[ext]'
@@ -77,7 +77,7 @@ const config = {
       context: '.',
       manifest: require('../vendor-manifest.json')
     }),
-    new AddVendorToPlugin(require('../vendor-manifest.json').filesName),
+    new AddVendorToPlugin(require('../vendor-manifest.json').assets),
     new CopyWebpackPlugin([{ from: 'static' }]),
     new HtmlWebpackPlugin({
       filename: 'index.html',

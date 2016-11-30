@@ -9,11 +9,11 @@ webpack(config, function (err, stats) {
   }
 
   // 记录 vendor 里打包出来的文件，AddVendorToApp 插件会用到
-  const filesName = stats.toJson({
-    assetsByChunkName: true
-  }).assetsByChunkName.vendor
+  const assets = stats.toJson({
+    assets: true
+  }).assets
 
   const manifestJson = require('../vendor-manifest.json')
-  manifestJson.filesName = filesName
+  manifestJson.assets = assets
   fs.writeFileSync(path.resolve(__dirname, '../vendor-manifest.json'), JSON.stringify(manifestJson))
 })
