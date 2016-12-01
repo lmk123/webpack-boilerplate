@@ -5,9 +5,8 @@
     "url": "git+https://github.com/lmk123/vuex-boilerplate.git"
   },
   "scripts": {
-    "_vendor": "node build/build-vendor",
-    "dev": "npm run _vendor && webpack --config build/webpack.app.js",
-    "start": "npm run _vendor && webpack-dev-server --inline --config build/webpack.devServer.js",
+    "dev": "webpack --config build/webpack.app.js",
+    "start": "webpack-dev-server --inline --config build/webpack.devServer.js",
     "build": "PRODUCTION=1 npm run dev",
     "lint": "eslint --ignore-pattern '/dist/' '**/*.{js,vue}'",
     "deploy": "npm run lint && npm run build && gh-pages -d dist"

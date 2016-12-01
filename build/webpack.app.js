@@ -1,8 +1,9 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const AddVendorToPlugin = require('./AddVendorToAppPlugin')
+const HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin')
 const path = require('path')
 const IS_PRODUCTION = !!process.env.PRODUCTION
 
@@ -22,12 +23,11 @@ const htmlMinifierOptions = {
 }
 
 const config = {
-  entry: {
-    app: './src/index'
-  },
+  entry: './src/index',
   output: {
     path: './dist',
-    filename: IS_PRODUCTION ? '[name].[chunkhash:7].js' : '[name].js'
+    filename: IS_PRODUCTION ? '[name].[chunkhash:7].js' : '[name].js',
+    chunkFilename: IS_PRODUCTION ? '[chunkhash:7].js' : '[name].js'
   },
   module: {
     loaders: [
@@ -39,7 +39,7 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.(woff2?|ttf|svg|eot|png|jpg|jepg|gif|bmp)(\?\S*)?$/,
+        test: /\.(woff2?|ttf|svg|eot)(\?\S*)?$/,
         loader: 'file-loader',
         query: {
           name: IS_PRODUCTION ? '[name].[hash:7].[ext]' : '[name].[ext]'
@@ -73,15 +73,15 @@ const config = {
     }
   },
   plugins: [
-    new webpack.DllReferencePlugin({
-      context: '.',
-      manifest: require('../vendor-manifest.json')
+    new HashedModuleIdsPlugin(),
+    new CleanWebpackPlugin(['dist'], {
+      root: path.resolve(__dirname, '../')
     }),
-    new AddVendorToPlugin(require('../vendor-manifest.json').assets),
     new CopyWebpackPlugin([{ from: 'static' }]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html',
+      chunksSortMode: 'dependency',
       minify: IS_PRODUCTION ? htmlMinifierOptions : false
     }),
     new ExtractTextPlugin(IS_PRODUCTION ? '[name].[contenthash:7].css' : '[name].css'),
@@ -102,8 +102,26 @@ if (IS_PRODUCTION) {
         warnings: false
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.(js|css)$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    })
   )
 }
 

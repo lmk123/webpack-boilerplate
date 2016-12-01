@@ -25,20 +25,16 @@
 
 ### 分离 vendor 与 app
 
-将需要打包至 vendor 里的模块列在 [build/webpack.vendor.js](/build/webpack.vendor.js#L10) 的 `entry` 配置里即可，支持分离 vendor 内的 css 文件。
-
-这套模版会自动帮你处理 css 里引用到的静态文件（使用 file-loader），如果你需要自行处理特定静态文件，请更改 build/webpack.vendor.js 里的 loader。
+这套模版会自动将从 `node_modules` 里引用的 js 和  css 打包至 vendor.js 与 vendor.css
 
 ### 提供的命令
 
  - `npm start`：打开一个代码更改时自动刷新的网页
  - `npm run dev`：生成未经压缩也没有带 hash 的静态文件到 `dist` 目录
- - `npm run build`：生成压缩并带上 hash 的静态文件到 `dist` 目录
+ - `npm run build`：生成压缩过并带上 hash 的静态文件到 `dist` 目录
  - `npm run lint`：使用 [StandardJS](http://standardjs.com/) 的规则检查代码（包括 `*.vue` 文件）
 
 ### 注意事项
-
-**记得更改 build/webpack.vendor.js 里的 entry 配置！**
 
 项目里配置了一个 .npmrc 文件用于从淘宝源下载代码，但如果你是想使用 `npm publish` 发布你的代码，记得先注释掉 .npmrc 里 registry 那一行。
 

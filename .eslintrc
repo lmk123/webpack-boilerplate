@@ -1,4 +1,14 @@
 {
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "amd": true
+  },
   "plugins": [
     "html"
   ],
