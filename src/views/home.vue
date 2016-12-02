@@ -11,7 +11,7 @@
   }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="sass" rel="stylesheet/scss">
   html {
     body {
       color: red;

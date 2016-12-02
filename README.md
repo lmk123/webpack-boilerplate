@@ -38,7 +38,7 @@
 
 项目里配置了一个 .npmrc 文件用于从淘宝源下载代码，但如果你是想使用 `npm publish` 发布你的代码，记得先注释掉 .npmrc 里 registry 那一行。
 
-.babaelrc 文件关闭了 `transform-runtime` 的自动添加 polyfill 的功能，如果需要可以开启。
+.babaelrc 文件里没有配置 `transform-runtime` 插件，所以 polyfill 不会自动添加进来。你可以自行开启这个插件，或者手动添加 polyfill。
 
 `static` 内的文件会原封不动的复制到 `dist` 目录下，适合放置一些与项目无关的文件，例如 robots.txt。
 

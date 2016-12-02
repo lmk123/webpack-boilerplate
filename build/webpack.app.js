@@ -51,7 +51,7 @@ const config = {
       },
       {
         test: /\.html$/,
-        loader: 'vue-html-loader'
+        loader: 'html-loader'
       },
       {
         test: /\.css$/,
@@ -64,12 +64,16 @@ const config = {
     ]
   },
   postcss: function () {
-    return [require('autoprefixer')]
+    return [require('autoprefixer')()]
   },
   vue: {
+    postcss: [require('autoprefixer')()],
     loaders: {
-      css: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader'),
-      scss: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader!sass-loader?sourceMap')
+      // 不要给 .vue 文件开启 css-loader 的 sourceMap，
+      // 因为异步加载 vue 组件时 sourceMap 会被内嵌在异步加载的 chunk 中导致文件变大
+      // https://github.com/webpack/css-loader#sourcemaps
+      css: ExtractTextPlugin.extract('vue-style-loader', 'css-loader!postcss-loader'),
+      sass: ExtractTextPlugin.extract('vue-style-loader', 'css-loader!postcss-loader!sass-loader')
     }
   },
   plugins: [
@@ -109,6 +113,7 @@ if (IS_PRODUCTION) {
         // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
+          // 这里会把从 node_modules 里加载的 js 及 css 从 app 里抽离出来变成 vendor.js 与 vendor.css
           /\.(js|css)$/.test(module.resource) &&
           module.resource.indexOf(
             path.join(__dirname, '../node_modules')
@@ -121,6 +126,11 @@ if (IS_PRODUCTION) {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
+    }),
+    // http://webpack.github.io/docs/list-of-plugins.html#3-move-common-modules-into-the-parent-chunk
+    new webpack.optimize.CommonsChunkPlugin({
+      children: true,
+      minChunks: 2
     })
   )
 }

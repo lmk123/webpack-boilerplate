@@ -7,7 +7,9 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      component: require('./views/home.vue')
+      component (resolve) {
+        require(['./views/home.vue'], resolve)
+      }
     }
   ]
 })
