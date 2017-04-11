@@ -22,8 +22,8 @@ var webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: utils.absolutePath(config.build.assetsRoot),
     publicPath: config.build.publicPath,
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[chunkhash].js'
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[chunkhash].js'
   },
   plugins: [
     new CleanWebpackPlugin([config.build.assetsRoot], {
@@ -42,7 +42,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: 'css/[name].[contenthash].css',
+      filename: '[name].[contenthash].css',
       // 如果不加下面这一行会报错
       // https://github.com/webpack/webpack/issues/959#issuecomment-276685210
       allChunks: true

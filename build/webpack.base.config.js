@@ -30,18 +30,16 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          publicPath: '../',
           limit: config.fileLimit,
-          name: 'img/[name].[hash:7].[ext]'
+          name: 'images/[name].[hash].[ext]'
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          publicPath: '../',
           limit: config.fileLimit,
-          name: 'fonts/[name].[hash:7].[ext]'
+          name: 'fonts/[name].[hash].[ext]'
         }
       }
     ]
