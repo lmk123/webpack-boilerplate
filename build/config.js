@@ -1,7 +1,7 @@
 module.exports = {
   staticRoot: 'static',
   htmlTemplate: 'src/index.ejs',
-  fileLimit: 2000, // 小于 2KB 的文件会被转换成 Data URI 内嵌在文件中
+  fileLimit: 2000, // images and fonts less than 2KB will transform to Data URI by url-loader
   build: {
     assetsRoot: 'dist',
     publicPath: '',

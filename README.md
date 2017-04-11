@@ -1,47 +1,37 @@
-# Webpack Boilerplate
+# Webpack With Vue.js Boilerplate
 
-顾名思义，这是一套 Webpack 项目模版。
+This is a Webpack + Vue.js boilerplate that heavy inspired by [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack) with these features:
 
-你可以访问[在线演示地址](https://lmk123.github.io/webpack-boilerplate)查看这个项目最终生成的文件结构。
+ - Apply [Autoprefixer](https://github.com/postcss/autoprefixer) outside of `.vue` components. See [vuejs-templates/webpack#600](https://github.com/vuejs-templates/webpack/issues/600) for more information.
+ - Use [webpack-dev-server](https://github.com/webpack/webpack-dev-server) instead of custom develop server.
+ - [Simple config](build/config.js).
+ - Not lint-on-save with ESLint: run `npm run lint` instead. This make me easy to debug code temporary.
+ - Use relative public path by default. See [vuejs-templates/webpack#200](https://github.com/vuejs-templates/webpack/issues/200) for more information.
+ - Apply Babel plugins with [babel-preset-env](https://github.com/babel/babel-preset-env).
+ - Use [HashedModuleIdsPlugin](https://github.com/webpack/webpack/blob/master/lib/HashedModuleIdsPlugin.js) to keep module ids consistent. See [vuejs-templates/webpack#406](https://github.com/vuejs-templates/webpack/issues/406) for more information.
+ - Similar to JS, also split CSS to `vendor.css` and `main.css`.
+ - Ready to use `import('./path/to/module')` syntax to [code-splitting](https://webpack.js.org/guides/code-splitting-import/).
 
-## 特点
+...and other little improve.
 
- - 真正的做到了分离 vendor 与 app。详情见[我的这篇博文](https://github.com/lmk123/blog/issues/47)。
- - 提供简单易用的开发命令（见下文）
- - 自带贴心功能：
-  - 使用 Babel 转换 ES2015 代码
-  - CSS autoprefix
-  - 复制静态文件到输出目录
-  - 使用 eslint 检查代码风格
+## Usage
 
-## 开始使用
+ 1. Clone this template use [Git](https://git-scm.com/) or [download it](https://github.com/vuejs-templates/webpack/archive/master.zip).
+ 2. Install dependencies: `npm install`
 
- 1. clone 这个项目到本地或者下载 zip 包并解压到工作目录
- 2. 如果你有洁癖的话，删掉 package.json 的 `devDependencies` 里的 `gh-pages` 并删掉 `scripts.deploy` 命令。这个命令是我上传 demo 站点用的。
- 3. 使用 NPM 3.0 及以上版本安装项目依赖 `npm i`
- 4. 运行 `npm start`
+Now you have three commands:
 
-## 使用手册
+ - `npm start`
+ - `npm run build`
+ - `npm run lint`: Lint code with ESLint (use [JavaScript Standard Style](https://standardjs.com/) rules)
 
-### 分离 vendor 与 app
+## Trouble-shooting
 
-这套模版会自动将从 `node_modules` 里引用的 js 和  css 打包至 vendor.js 与 vendor.css
+This boilerplate use [Sass](http://sass-lang.com/) by default so I specified `node-sass` and `sass-loader` in package.json, but if you want use [less](http://lesscss.org/) or [stylus](http://stylus-lang.com/), you need install then by yourself:
 
-### 提供的命令
+```
+npm install less-loader --save-dev
+npm install stylus-loader --save-dev
+```
 
- - `npm start`：打开一个代码更改时自动刷新的网页
- - `npm run dev`：生成未经压缩也没有带 hash 的静态文件到 `dist` 目录
- - `npm run build`：生成压缩过并带上 hash 的静态文件到 `dist` 目录
- - `npm run lint`：使用 [StandardJS](http://standardjs.com/) 的规则检查代码（包括 `*.vue` 文件）
-
-### 注意事项
-
-项目里配置了一个 .npmrc 文件用于从淘宝源下载代码，但如果你是想使用 `npm publish` 发布你的代码，记得先注释掉 .npmrc 里 registry 那一行。
-
-.babaelrc 文件里没有配置 `transform-runtime` 插件，所以 polyfill 不会自动添加进来。你可以自行开启这个插件，或者手动添加 polyfill。
-
-`static` 内的文件会原封不动的复制到 `dist` 目录下，适合放置一些与项目无关的文件，例如 robots.txt。
-
-## 许可
-
-MIT
+**FOR CHINESE USER:** 如果你在安装 `node-sass` 时遇到问题，请参考这篇文章解决：[安装 node-sass 的正确姿势](https://github.com/lmk123/blog/issues/28)
