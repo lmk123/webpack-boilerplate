@@ -3,13 +3,19 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component (resolve) {
-        require(['./views/home.vue'], resolve)
-      }
+      name: '首页',
+      component: () => import('./pages/index.vue')
+    },
+    {
+      path: '*',
+      name: '404',
+      component: () => import('./pages/404.vue')
     }
   ]
 })
+
+export default router
