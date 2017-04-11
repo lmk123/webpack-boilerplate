@@ -22,8 +22,8 @@ var webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: utils.absolutePath(config.build.assetsRoot),
     publicPath: config.build.publicPath,
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[chunkhash].js'
+    filename: 'js/[name].[chunkhash].js',
+    chunkFilename: 'js/[chunkhash].js'
   },
   plugins: [
     new CleanWebpackPlugin([config.build.assetsRoot], {
@@ -42,6 +42,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
+      // if we use a prefix (something like `css/[name].css`) it will break all `url()` reference
+      // such as `background-image` and `@font-face src`
       filename: '[name].[contenthash].css',
       // 如果不加下面这一行会报错
       // https://github.com/webpack/webpack/issues/959#issuecomment-276685210
