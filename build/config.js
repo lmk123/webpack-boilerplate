@@ -15,7 +15,7 @@ module.exports = {
     port: 8080,
     proxy: {},
     sourceMap: true,
-    externally: true,
+    externally: false,
     env: {
       NODE_ENV: '"development"'
     }
