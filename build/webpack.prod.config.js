@@ -8,7 +8,7 @@ var baseWebpackConfig = require('./webpack.base.config')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin-temp')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 var webpackConfig = merge(baseWebpackConfig, {
@@ -18,7 +18,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       extract: true
     })
   },
-  devtool: config.build.sourceMap ? '#source-map' : false,
+  devtool: config.build.sourceMap ? 'source-map' : false,
   output: {
     path: utils.absolutePath(config.build.assetsRoot),
     publicPath: config.build.publicPath,
@@ -43,7 +43,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // extract css into its own file
     new ExtractTextPlugin({
       // if we use a prefix (something like `css/[name].css`) it will break all `url()` reference
-      // such as `background-image` and `@font-face src`
+      // such as `background-image` and `@font-face src` when public path is relatively
       filename: '[name].[contenthash].css',
       // 如果不加下面这一行会报错
       // https://github.com/webpack/webpack/issues/959#issuecomment-276685210
@@ -53,7 +53,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
       cssProcessorOptions: {
-        safe: true
+        safe: true,
+        map: config.build.sourceMap ? { inline: false } : false
       }
     }),
     // generate dist index.html with correct asset hash for caching.

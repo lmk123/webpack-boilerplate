@@ -6,7 +6,8 @@ This is a Webpack + Vue.js boilerplate that heavy inspired by [vuejs-templates/w
  - Use [webpack-dev-server](https://github.com/webpack/webpack-dev-server) instead of custom develop server.
  - [Simple config](build/config.js).
  - Not lint-on-save with ESLint: run `npm run lint` instead. This make me easy to debug code temporary.
- - Use relative public path by default. See [vuejs-templates/webpack#200](https://github.com/vuejs-templates/webpack/issues/200).
+ - Use **relative public path** by default. See [vuejs-templates/webpack#200](https://github.com/vuejs-templates/webpack/issues/200).
+ - Keep source map path comment in the CSS files after a production build. See [NMFR/optimize-css-assets-webpack-plugin#6](https://github.com/NMFR/optimize-css-assets-webpack-plugin/pull/6).
  - Apply Babel plugins with [babel-preset-env](https://github.com/babel/babel-preset-env).
  - Use [HashedModuleIdsPlugin](https://github.com/webpack/webpack/blob/master/lib/HashedModuleIdsPlugin.js) to keep module ids consistent. See [vuejs-templates/webpack#406](https://github.com/vuejs-templates/webpack/issues/406).
  - Similar to JS, also split CSS to `vendor.css` and `main.css`. See [vuejs-templates/webpack#598](https://github.com/vuejs-templates/webpack/issues/598).
