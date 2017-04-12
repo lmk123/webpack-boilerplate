@@ -33,13 +33,21 @@ module.exports = merge(webpackBaseConfig, {
           opn(getURI('localhost'))
 
           if (config.dev.externally) {
+            var generateQR = config.dev.externally === 'qrcode'
+            var qr = require('qrcode-terminal')
             console.log('Project also available on:')
             var ifaces = require('os').networkInterfaces()
             for (var key in ifaces) {
               ifaces[key].forEach(obj => {
                 var address = obj.address
                 if (obj.family === 'IPv4' && address !== '127.0.0.1') {
-                  console.log('  ' + getURI(address))
+                  var url = getURI(address)
+                  console.log('  ' + url)
+                  if (generateQR) {
+                    qr.generate(url, { small: true }, function (qrcode) {
+                      console.log(qrcode.split('\n').map(function (line) { return '  ' + line }).join('\n'))
+                    })
+                  }
                 }
               })
             }

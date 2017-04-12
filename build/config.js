@@ -1,7 +1,8 @@
 module.exports = {
   staticRoot: 'static',
   htmlTemplate: 'src/index.ejs',
-  fileLimit: 2000, // images and fonts less than 2KB will transform to Data URI by url-loader
+  // images and fonts less than 2KB will transform to Data URI by url-loader
+  fileLimit: 2000,
   build: {
     assetsRoot: 'dist',
     publicPath: '',
@@ -15,7 +16,8 @@ module.exports = {
     port: 8080,
     proxy: {},
     sourceMap: true,
-    externally: false,
+    // available values for `externally`: false, true or 'qrcode'
+    externally: 'qrcode',
     env: {
       NODE_ENV: '"development"'
     }
