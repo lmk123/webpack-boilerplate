@@ -8,7 +8,7 @@ var baseWebpackConfig = require('./webpack.base.config')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin-temp')
+var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 var webpackConfig = merge(baseWebpackConfig, {
