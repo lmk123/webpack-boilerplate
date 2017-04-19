@@ -24,6 +24,13 @@
   ],
   "plugins": [
     "syntax-dynamic-import",
-    "external-helpers"
+    [
+      "transform-runtime",
+      {
+        "helpers": true,
+        "polyfill": false,
+        "regenerator": false
+      }
+    ]
   ]
 }
