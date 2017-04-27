@@ -53,7 +53,7 @@ function getCssLoaders (options) {
   return {
     css: generateLoader(),
     less: generateLoader('less'), // 需要单独安装 less-loader
-    sass: generateLoader('sass', { indentedSyntax: true }),
+    sass: generateLoader('sass'),
     scss: generateLoader('sass'),
     stylus: generateLoader('stylus') // 需要单独安装 stylus-loader
   }
