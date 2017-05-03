@@ -61,6 +61,8 @@ module.exports = merge(webpackBaseConfig, {
     noInfo: true,
     port: config.dev.port,
     host: config.dev.externally ? '0.0.0.0' : 'localhost',
-    proxy: config.dev.proxy
+    proxy: config.dev.proxy,
+    // https://github.com/webpack/webpack-dev-server/releases/tag/v2.4.3
+    disableHostCheck: !!config.dev.externally
   }
 })
