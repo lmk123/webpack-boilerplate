@@ -1,6 +1,6 @@
 import 'normalize.css/normalize.css'
 import './assets/fontello/css/fontello.css'
-import './stylesheets/global.scss'
+import './assets/stylesheets/global.scss'
 
 import Vue from 'vue'
 import App from './app.vue'
