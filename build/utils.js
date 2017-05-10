@@ -28,7 +28,16 @@ function getCssLoaders (options) {
     // vue-loader 会自动给 .vue 文件中的 <style> 块应用 postcss-loader，
     // 但当直接在项目中引用 CSS 文件时就不会，所以
     // 这里统一加上 postcss-loader
-    var loaders = [cssLoader, 'postcss-loader']
+    var loaders = [
+      cssLoader,
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: options.sourceMap
+        }
+      }
+    ]
+
     if (ext) {
       loaders.push({
         loader: ext + '-loader',
