@@ -31,7 +31,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: config.fileLimit,
-          name: 'images/[name].[hash].[ext]'
+          name: 'images/[name]' + (isProduction ? '.[hash]' : '') + '.[ext]'
         }
       },
       {
@@ -39,7 +39,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: config.fileLimit,
-          name: 'fonts/[name].[hash].[ext]'
+          name: 'fonts/[name]' + (isProduction ? '.[hash]' : '') + '.[ext]'
         }
       }
     ]
