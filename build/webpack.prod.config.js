@@ -107,6 +107,10 @@ var webpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
+if (config.build.serviceWorker) {
+  utils.enableOffline(webpackConfig)
+}
+
 if (config.build.analyzer) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
