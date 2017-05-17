@@ -98,7 +98,7 @@ exports.enableOffline = function (webpackConfig) {
     excludes: ['**/*.map'],
     ServiceWorker: {
       // 如果网站用的是 History API 模式则需要取消下面的注释
-      navigateFallbackURL: '/',
+      // navigateFallbackURL: '/',
       events: true,
       // 假设我们的网站部署在 https://www.mysite.com/ 下，
       // 但 webpack 的 publicPath 设置成了另一个域名（比如 https://cdn.mysite.com/），
