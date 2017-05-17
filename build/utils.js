@@ -96,6 +96,15 @@ exports.enableOffline = function (webpackConfig) {
     },
     externals: ['/'],
     excludes: ['**/*.map'],
+    // https://github.com/NekR/offline-plugin/blob/master/docs/cache-maps.md
+    cacheMaps: [
+      {
+        match: function () {
+          return new URL('/', location)
+        },
+        requestTypes: ['navigate']
+      }
+    ],
     ServiceWorker: {
       events: true,
       // 假设我们的网站部署在 https://www.mysite.com/ 下，
