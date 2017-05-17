@@ -92,21 +92,13 @@ exports.enableOffline = function (webpackConfig) {
         ? ['/', '**/@(manifest|vendor|main).*.js', '**/@(main|vendor).*.css']
         : ['/', 'main.js'],
       // additional 里的匹配会自动去除 main 里已经匹配到的文件
-      additional: ['**/*.@(png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf)', '**/*.js']
+      additional: [':rest:']
     },
     externals: ['/'],
     excludes: ['**/*.map'],
-    // 如果网站用的是 History API 模式则需要取消下面的注释
-    // https://github.com/NekR/offline-plugin/blob/master/docs/cache-maps.md
-    // cacheMaps: [
-    //   {
-    //     match: function () {
-    //       return new URL('/', location)
-    //     },
-    //     requestTypes: ['navigate']
-    //   }
-    // ],
     ServiceWorker: {
+      // 如果网站用的是 History API 模式则需要取消下面的注释
+      navigateFallbackURL: '/',
       events: true,
       // 假设我们的网站部署在 https://www.mysite.com/ 下，
       // 但 webpack 的 publicPath 设置成了另一个域名（比如 https://cdn.mysite.com/），
