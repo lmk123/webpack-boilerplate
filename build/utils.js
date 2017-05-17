@@ -88,15 +88,23 @@ exports.enableOffline = function (webpackConfig) {
     safeToUseOptionalCaches: true,
     caches: {
       main: IS_PRODUCTION
-        ? ['./', '**/@(manifest|vendor|main).*.js', '**/@(main|vendor).*.css']
-        : ['./', 'main.js'],
+        // TODO 这里写成 / 其实对相对路径的站点很不友好，需要加一波文档
+        ? ['/', '**/@(manifest|vendor|main).*.js', '**/@(main|vendor).*.css']
+        : ['/', 'main.js'],
       // additional 里的匹配会自动去除 main 里已经匹配到的文件
       additional: ['**/*.@(png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf)', '**/*.js']
     },
-    externals: ['./'],
+    externals: ['/'],
     excludes: ['**/*.map'],
     ServiceWorker: {
-      events: true
+      events: true,
+      // 假设我们的网站部署在 https://www.mysite.com/ 下，
+      // 但 webpack 的 publicPath 设置成了另一个域名（比如 https://cdn.mysite.com/），
+      // 那默认就会请求 CDN 域名下的 sw 文件（https://cdn.mysite.com/sw.js），
+      // 但 sw.js 只能从部署域名下请求，
+      // 所以这里需要覆盖 publicPath 值，
+      // 让 sw.js 永远从 https://www.mysite.com/sw.js 获取
+      publicPath: 'sw.js'
     },
     AppCache: false
   }))
