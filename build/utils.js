@@ -87,14 +87,33 @@ exports.enableOffline = function (webpackConfig) {
   webpackConfig.plugins.push(new (require('offline-plugin'))({
     safeToUseOptionalCaches: true,
     caches: {
-      additional: ['**/*.{jpg,jpeg,png,gif,svg}'], // 图片文件在 install 事件之后再加载
-      optional: ['**/*.{woff,woff2,eot,ttf,otf}'], // 字体文件仅在第一次加载后才缓存——因为基本上只会用到其中一种
-      main: [':rest:'] // 其它文件一律在 install 事件中加载
+      // 在 additional 里加太多文件会导致更新时所有请求都被挂起，所以这里不在里面加任何文件
+      // https://github.com/NekR/offline-plugin/issues/259
+      // additional: [],
+      optional: ['**/*.{woff,woff2,eot,ttf,otf,jpg,jpeg,png,gif,svg}'], // 字体和图片文件仅在第一次加载后才缓存
+      main: [':rest:'] // 其它文件（基本上是 js 和 css）一律在 install 事件中加载
+      // 如果 publicPath 是第三方域名，则 main 要改成 ['/', '**/*.{css,js}'] 并在 externals 里加入 '/'。
+      // 之所以不写成 ':rest:' 是因为 ':rest:' 里包含的 '/'，
+      // 如果项目的 publicPath 用到了第三方域名（例如 https://cdn.com/subdir/）的话，
+      // 这个 '/' 在 sw.js 里会被替换成 https://cdn.com/subdir/，
+      // 但这个链接永远不会在应用当前域名下被访问到。
+      // 手动在 main 里加入 '/'，就永远会指向当前域名下的首页。
     },
     excludes: ['**/*.map'],
+    // 仅仅是设置 navigateFallbackURL: '/' 是不行的，
+    // service worker 内部还是会请求一遍数据而不是直接返回 ／ 资源，
+    // 所以为了达到 App-shell 的效果还是要设置 cacheMaps。
+    // https://github.com/NekR/offline-plugin/blob/master/docs/cache-maps.md
+    // 如果网站用的是 History API 模式则取消下面的注释。
+    // cacheMaps: [
+    //   {
+    //     match: function () {
+    //       return new URL('/', location);
+    //     },
+    //     requestTypes: ['navigate']
+    //   }
+    // ],
     ServiceWorker: {
-      // 如果网站用的是 History API 模式则取消下面的注释
-      // navigateFallbackURL: '/',
       events: true,
       // 假设我们的网站部署在 https://www.mysite.com/ 下，
       // 但 webpack 的 publicPath 设置成了另一个域名（比如 https://cdn.mysite.com/），
