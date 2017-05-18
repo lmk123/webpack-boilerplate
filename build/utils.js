@@ -87,17 +87,13 @@ exports.enableOffline = function (webpackConfig) {
   webpackConfig.plugins.push(new (require('offline-plugin'))({
     safeToUseOptionalCaches: true,
     caches: {
-      main: IS_PRODUCTION
-        // TODO 这里写成 / 其实对相对路径的站点很不友好，需要加一波文档
-        ? ['/', '**/@(manifest|vendor|main).*.js', '**/@(main|vendor).*.css']
-        : ['/', 'main.js'],
-      // additional 里的匹配会自动去除 main 里已经匹配到的文件
-      additional: [':rest:']
+      additional: ['**/*.{jpg,jpeg,png,gif,svg}'], // 图片文件在 install 事件之后再加载
+      optional: ['**/*.{woff,woff2,eot,ttf,otf}'], // 字体文件仅在第一次加载后才缓存——因为基本上只会用到其中一种
+      main: [':rest:'] // 其它文件一律在 install 事件中加载
     },
-    externals: ['/'],
     excludes: ['**/*.map'],
     ServiceWorker: {
-      // 如果网站用的是 History API 模式则需要取消下面的注释
+      // 如果网站用的是 History API 模式则取消下面的注释
       // navigateFallbackURL: '/',
       events: true,
       // 假设我们的网站部署在 https://www.mysite.com/ 下，
