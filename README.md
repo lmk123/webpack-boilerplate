@@ -12,7 +12,6 @@ This is a Webpack + Vue.js boilerplate that heavy inspired by [vuejs-templates/w
  - Use [HashedModuleIdsPlugin](https://github.com/webpack/webpack/blob/master/lib/HashedModuleIdsPlugin.js) to keep module ids consistent. See [vuejs-templates/webpack#406](https://github.com/vuejs-templates/webpack/issues/406).
  - Similar to JS, also split CSS to `vendor.css` and `main.css`. See [vuejs-templates/webpack#598](https://github.com/vuejs-templates/webpack/issues/598).
  - Ready to use `import('./path/to/module')` syntax to [code-splitting](https://webpack.js.org/guides/code-splitting-import/).
- - Support **Service Worker** made by [offline-plugin](https://github.com/NekR/offline-plugin).
 
 ...and other little improve.
 
