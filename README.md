@@ -1,3 +1,5 @@
+**Deprecated, use [Vue CLI](https://cli.vuejs.org/) instead.**
+
 # Webpack With Vue.js Boilerplate
 
 This is a Webpack + Vue.js boilerplate that heavy inspired by [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack) with these features:
